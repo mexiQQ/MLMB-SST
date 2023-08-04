@@ -16,15 +16,13 @@
 # limitations under the License.
 """Community Class."""
 
-class BaseCommunity:
-    def __init__(self):
-        self.graph = None 
+from BaseCommunity import BaseCommunity
 
-    def add_agent(self, agent):
-        raise NotImplementedError("This method should be implemented in child class")
+class BaseCommunityWithoutPurpose(BaseCommunity):
+    def __init__(self, purpose: str):
+        self.graph = {}
+        self.purpose = purpose
 
-    def add_relationship(self, agent1, agent2):
-        raise NotImplementedError("This method should be implemented in child class")
+    
 
-    def start():
-        raise NotImplementedError("This method should be implemented in child class")
+    

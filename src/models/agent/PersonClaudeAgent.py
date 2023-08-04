@@ -15,3 +15,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Agent Class."""
+
+from .base.PersonAgent import PersonAgent
+from tools.gpt_connector import call_gpt
+
+class PersonClaudeAgent(PersonAgent):
+    def __init__(self, mission: str, model_name: str):
+        super().__init__(mission)
+        self.model_name = model_name
+
+    def decorate_input(self, input: str, description:str):
+        return input
+
+    def execute(self, input: str, description: str):
+        input = self.decorate_input(input, description)
+        return call_gpt(input)
+        

@@ -14,3 +14,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+"""Community Class."""
+
+from BaseCommunity import BaseCommunity
+
+class BaseCommunityWithPurpose(BaseCommunity):
+    def __init__(self, purpose: str):
+        self.graph = {}
+        self.purpose = purpose
+
+    
+
+    
