@@ -1,3 +1,20 @@
+#! /usr/bin/env python3
+# coding=utf-8
+
+# Jianwei Li @NCSU-DK-LAB 
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 import openai
 import yaml
 import random
@@ -65,14 +82,14 @@ def retry_with_exponential_backoff(
 def call_gpt(model: str, prompt: str) -> str:
     """Perform a single api call with specified model and prompt."""
     if model in [
-        "gpt-3.5-turbo", 
-        "gpt-3.5-turbo-0301",
-        "gpt-3.5-turbo-0613",
-        "gpt-3.5-turbo-16k",
-        "gpt-3.5-turbo-16k-0613",
-        "gpt-4", 
-        "gpt-4-0314", 
-        "gpt-3.5-turbo-0301",
+            "gpt-3.5-turbo", 
+            "gpt-3.5-turbo-0301",
+            "gpt-3.5-turbo-0613",
+            "gpt-3.5-turbo-16k",
+            "gpt-3.5-turbo-16k-0613",
+            "gpt-4", 
+            "gpt-4-0314", 
+            "gpt-3.5-turbo-0301",
         ]:
 
         response = openai.ChatCompletion.create(
