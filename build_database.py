@@ -27,11 +27,11 @@ def create_database_and_table(host: str, user: str, password: str):
         "CREATE TABLE IF NOT EXISTS agent_records ("
         "id INT AUTO_INCREMENT PRIMARY KEY, "
         "agent_id VARCHAR(255), "
-        "create_time TIMESTAMP, "
-        "update_time TIMESTAMP, "
+        "create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+        "update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, "
         "query TEXT, "
         "response TEXT"
-        ")"
+    ")"
     )
 
     # Create agents table
@@ -40,7 +40,9 @@ def create_database_and_table(host: str, user: str, password: str):
         "agent_id VARCHAR(255) PRIMARY KEY, "
         "category VARCHAR(255), "
         "mission TEXT, "
-        "relations TEXT"
+        "relations TEXT, "
+        "create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+        "update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
         ")"
     )
 
@@ -48,4 +50,4 @@ def create_database_and_table(host: str, user: str, password: str):
     conn.close()
 
 # Use the function
-create_database_and_table("localhost", "username", "password")
+create_database_and_table("localhost", "root", "")
