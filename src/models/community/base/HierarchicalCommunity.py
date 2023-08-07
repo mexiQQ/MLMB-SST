@@ -15,13 +15,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .base.BaseCommunityWithPurpose import BaseCommunityWithPurpose
+from BaseCommunity import BaseCommunity
 
-class GrideCommunity(BaseCommunityWithPurpose):
+class GrideCommunity(BaseCommunity):
     def __init__(self, purpose: str, width: int, height: int):
         self.graph = [] 
         self.width = width
         self.height = height
         self.purpose = purpose
-
-    

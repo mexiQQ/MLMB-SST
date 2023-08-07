@@ -1,4 +1,4 @@
 host: "localhost"
-user: "username"
-password: "password"
+user: "root"
+password: ""
 database: "social_sim_db"

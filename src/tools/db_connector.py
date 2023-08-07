@@ -16,8 +16,8 @@
 # limitations under the License.
 
 
-import mysql.connector
-import mysql.connector.pooling
+import pymysqlpool
+from neo4j import GraphDatabase
 import yaml
 
 # Load database configuration from YAML file
@@ -31,15 +31,23 @@ dbconfig = {
   "password": database_config["password"],
   "host":     database_config["host"],
 }
-cnxpool = mysql.connector.pooling.MySQLConnectionPool(pool_name = "mypool",
-                                                      pool_size = 10,
-                                                      pool_reset_session = True,
-                                                      **dbconfig)
 
-# Function to get connection from the pool
-def get_connection():
-    return cnxpool.get_connection()
+class DbConnector:
+    def __init__(self, config: dict):
+        pymysqlpool.logger.setLevel(pymysqlpool.logging.DEBUG)
+        self.pool = pymysqlpool.ConnectionPool(size=10, name='pool', **config)
+        
+    def execute_query(self, query: str, values: tuple):
+        connection = self.pool.get_connection()
+        try:
+            with connection.cursor() as cursor:
+                result_proxy = cursor.execute(query, values)
+            connection.commit()
+            if isinstance(result_proxy, list):
+                return [dict(row) for row in result_proxy]
+        finally:
+            # self.pool.release(connection)
+            connection.close()
 
-# Function to close all connections
-def close_all_connections():
-    cnxpool._remove_connections()
+mysql_drive = DbConnector(dbconfig) 
+neo4j_driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "Li19940426"))

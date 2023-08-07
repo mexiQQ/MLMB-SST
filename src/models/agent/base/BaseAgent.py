@@ -16,12 +16,11 @@
 # limitations under the License.
 """Agent Class."""
 
-import json
-from datetime import datetime
+from neo4j import GraphDatabase, Driver
 from enum import Enum
 import uuid
-
-from db_connector import get_connection
+import time
+from tools.db_connector import mysql_drive, neo4j_driver
 
 class Category(Enum):
     PERSON = "person"
@@ -30,77 +29,40 @@ class Category(Enum):
     TOOL = "tool"
 
 class BaseAgent:
-    def __init__(self, category: Category, mission: str):
+    def __init__(self, category:Category, mission:str, model_name:str):
         self.agent_id = str(uuid.uuid4())
         self.category = category
         self.mission = mission
-        self.relations = {"group": [], "peer": []}
+        self.model_name = model_name
         self.records = []
+        self.temp_memory = ""
 
+    @classmethod
+    def from_dict(cls, data: dict):
+        agent = cls(Category(data['category']), data['mission'], data['model_name'])
+        agent.agent_id = data['id']
+        return agent
+    
     def execute(self, input: str, description: str):
         raise NotImplementedError("This method should be implemented in child class")
 
-    def write_to_db(self):
-        # Get a connection from the pool
-        conn = get_connection()
-        cursor = conn.cursor()
+    # def add_record(self, to_agent_id: str, query: str, response: str):
+    #     record = {
+    #         "id": str(uuid.uuid4()),
+    #         "from": self.agent_id,
+    #         "to": to_agent_id,
+    #         "query": query,
+    #         "response": response,
+    #         "create_time": int(time.time()),
+    #         "update_time": int(time.time())
+    #     }
+    #     self.records.append(record)
+    #     self.save_record_to_mysql(mysql_drive, record)
 
-        # Convert relations to string
-        relations_str = json.dumps(self.relations)
+    # def save_record_to_mysql(self, record: dict):
+    #     query = "INSERT INTO records (id, from_agent_id, to_agent_id, query, response, create_time, update_time) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    #     values = (record["id"], record["from"], record["to"], record["query"], record["response"], record["create_time"], record["update_time"])
+    #     mysql_drive.execute_query(query, values)
 
-        # Create a new agent record
-        sql = (
-            "INSERT INTO agents (agent_id, category, mission, relations) "
-            "VALUES (%s, %s, %s, %s)"
-        )
-        val = (self.agent_id, self.category.value, self.mission, relations_str)
-        cursor.execute(sql, val)
-        conn.commit()
-
-        # Return the connection to the pool
-        conn.close()
-
-    def fetch_records(self):
-        # Get a connection from the pool
-        conn = get_connection()
-        cursor = conn.cursor()
-
-        # Fetch all records for this agent
-        sql = "SELECT * FROM agent_records WHERE agent_id = %s"
-        val = (self.agent_id, )
-        cursor.execute(sql, val)
-        self.records = cursor.fetchall()
-
-        # Return the connection to the pool
-        conn.close()
-
-    @classmethod
-    def read_from_db(cls, agent_id: str):
-        # Get a connection from the pool
-        conn = get_connection()
-        cursor = conn.cursor()
-
-        # Fetch the agent record
-        sql = "SELECT * FROM agents WHERE agent_id = %s"
-        val = (agent_id, )
-        cursor.execute(sql, val)
-        agent_record = cursor.fetchone()
-
-        if agent_record is None:
-            raise ValueError(f"No agent found with ID {agent_id}")
-
-        # Convert relations back to dictionary
-        relations = json.loads(agent_record[3])
-
-        # Create a new agent object
-        agent = cls(Category(agent_record[1]), agent_record[2])
-        agent.agent_id = agent_record[0]
-        agent.relations = relations
-
-        # Fetch the agent's records
-        agent.fetch_records()
-
-        # Return the connection to the pool
-        conn.close()
-
-        return agent
+    def __repr__(self) -> str:
+        return f"Agent: {self.agent_id}, Category: {self.category}, Model: {self.model_name}"

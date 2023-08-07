@@ -14,15 +14,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Community Class."""
 
-from BaseCommunity import BaseCommunity
+def get_query_questions(source: str, count: int):
+    """Sample incoming questions for the conversations"""
+    if source == 'hh-rlhf':
+        questions = []
+        path = f"data/{source}/question.txt"
+        with open(path, 'r') as f:
+            for line in f:
+                questions.append(line.strip())
 
-class BaseCommunityWithoutPurpose(BaseCommunity):
-    def __init__(self, purpose: str):
-        self.graph = {}
-        self.purpose = purpose
-
-    
-
-    
+        return questions[:count if count < len(questions) else len(questions)]
+    else:
+        raise NotImplementedError

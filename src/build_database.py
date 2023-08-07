@@ -5,7 +5,7 @@
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+# You may obtain a copy of thge License at
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 #
@@ -14,14 +14,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""PersonAgent Class."""
 
-from .BaseAgent import BaseAgent, Category
+from tools.db_connector import DbConnector, mysql_drive
 
-class PersonAgent(BaseAgent):
-    def __init__(self, mission:str, model_name:str):
-        super().__init__(Category.PERSON, mission, model_name)
+def create_mysql_database(db_connector: DbConnector):
+    db_connector.execute_query("CREATE TABLE IF NOT EXISTS records (id VARCHAR(255), from_agent_id VARCHAR(255), to_agent_id VARCHAR(255), query TEXT, response TEXT, create_time INT, update_time INT)", ())
 
-    def execute(self, input: str, description: str):
-        # TODO: Implement this method
-        pass
+def build_database():
+    create_mysql_database(mysql_drive)
+
+build_database()

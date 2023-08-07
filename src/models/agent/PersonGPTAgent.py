@@ -21,8 +21,7 @@ from tools.gpt_connector import call_gpt
 
 class PersonGPTAgent(PersonAgent):
     def __init__(self, mission: str, model_name: str):
-        super().__init__(mission)
-        self.model_name = model_name
+        super().__init__(mission, model_name)
 
     def decorate_input(self, input: str, description:str):
         return input

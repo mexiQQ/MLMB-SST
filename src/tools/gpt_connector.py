@@ -31,9 +31,9 @@ Please adhere to the following guidelines for all future responses:
     
 # Load configuration from YAML file
 with open("configs/openai_config.yaml", 'r') as stream:
-    config = yaml.safe_load(stream)
+    openai_config = yaml.safe_load(stream)
 
-openai.api_key = config['openai']['api_key']
+openai.api_key = openai_config['api_key']
 
 def retry_with_exponential_backoff(
     func: Any,
@@ -89,7 +89,6 @@ def call_gpt(model: str, prompt: str) -> str:
             "gpt-3.5-turbo-16k-0613",
             "gpt-4", 
             "gpt-4-0314", 
-            "gpt-3.5-turbo-0301",
         ]:
 
         response = openai.ChatCompletion.create(
