@@ -79,8 +79,11 @@ def retry_with_exponential_backoff(
 
 
 @retry_with_exponential_backoff
-def call_gpt(model: str, prompt: str) -> str:
+def call_gpt(model: str, prompt: Any) -> str:
     """Perform a single api call with specified model and prompt."""
+    if isinstance(prompt, tuple):
+        prompt = "".join(prompt)
+        
     if model in [
             "gpt-3.5-turbo", 
             "gpt-3.5-turbo-0301",

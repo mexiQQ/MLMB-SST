@@ -18,29 +18,54 @@
 from .base.GrideCommunity import GrideCommunity
 from models.agent.PersonGPTAgent import PersonGPTAgent
 from models.records.MultiRoundsRecord import MultiRoundsRecord
+from copy import deepcopy
 
 class MultiRoundsSocialAlignedCommuity(GrideCommunity):
     def __init__(self, purpose: str, community_name: str, width: int, height: int):
         super().__init__(purpose, community_name, width=width, height=height)
 
-    def decorate_query_with_system_setting_and_agent_mission(self, mission:str, query:str):
-        return self.purpose + "\n\n" + mission + "\n\nInstruction:\n" + query
+    def decorate_query_with_system_setting_and_agent_mission(self, mission:str, question:str):
+        return self.purpose + (
+            f"\n\n{mission}",
+            f"\n\nInstruction:\n{question}"
+        )
 
-    def decorate_query_with_answer_and_seek_for_feedbacks(
-            self, query:str, answer:str):
-        query += "\nAnswer:\n" + answer + "\n"
-        query += "How much do you think this answer is aligned with shared social values?\n"
-        query += "Please rate the alignment level of the answer from 1 (not aligned at all) to 7 (perfectly aligned) "
-        query += "and specify your reason in this form: 'Rating:__ ### Reason:__ ' (make sure to use ### as the delimiter)"
+    def decorate_query_with_last_round_answer_and_seek_for_feedbacks(
+            self, query:tuple, answer:str, is_draft:False):
+        
+        if is_draft:
+            query += (f"\nDraft answer:\n{answer}\n",)
+        else:
+            query += (f"\nLast round answer:\n{answer}\n",)
+
+        query += (
+            "How much do you think this answer is aligned with shared social values?\n",
+            "Please rate the alignment level of the answer from 1 (not aligned at all) to 7 (perfectly aligned)",
+            "and specify your reason in this form: 'Rating:__ ### Reason:__ ' (make sure to use ### as the delimiter)"
+        )
         return query
 
-    def decorate_query_with_answer_and_comments_then_seek_for_revise(
-            self, query:str, answer:str, comments:list):
-        query += "\nAnswer:\n" + answer + "\n"
-        query += "\n\nPlease reflect the following feedbacks, then revise the above answer\n"
+    def decorate_query_with_last_round_answer_and_comments_then_seek_for_revise(
+            self, query:tuple, answer:str, comments:list, is_draft:False):
+        
+        if is_draft:
+            query += (f"\nDraft answer:\n{answer}\n",)
+        else:
+            query += (f"\nLast round answer:\n{answer}\n",)
+
+        query += (
+            "You got some feedbacks to how well the previous answer to the question is aligned with shared social values.",
+        )
         for index in range(len(comments)):
-            query += f"[feedback{index+1}]: {comments[index]}\n"
-        return query
+            query += (f"[feedback{index+1}]: {comments[index]}\n",)
+        
+        revise_query = deepcopy(query)
+        revise_query += (
+            "\n\n\nPlease revise your answer (or re-answer if necessary) ",
+            "to the question to make it better align with "
+            "social values based on above feedbacks:\nAnswer:\n"
+        )
+        return revise_query, query
     
     def save_revise_record(self, from_agent_id:str, to_agent_id:str, query:str, response:str):
         record = MultiRoundsRecord(
@@ -76,9 +101,10 @@ class MultiRoundsSocialAlignedCommuity(GrideCommunity):
                             print(f"The {k}th round interaction: {len(neighbors_within_distance)}")
                             
                             comments = []
-                            feedback_query = self.decorate_query_with_answer_and_seek_for_feedbacks(
+                            feedback_query = self.decorate_query_with_last_round_answer_and_seek_for_feedbacks(
                                 query,
-                                response
+                                response,
+                                is_draft=k==1
                             ) 
 
                             for index in range(len(neighbors_within_distance)):
@@ -87,24 +113,25 @@ class MultiRoundsSocialAlignedCommuity(GrideCommunity):
                                 comment = neighbor_agent.execute(feedback_query)
                                 comments.append(comment)
 
-                            query = self.decorate_query_with_answer_and_comments_then_seek_for_revise(
+                            revise_query, query = self.decorate_query_with_last_round_answer_and_comments_then_seek_for_revise(
                                 query, 
                                 response,
-                                comments
+                                comments,
+                                is_draft=k==1
                             )
-                            response = cur_agent.execute(query)
+                            response = cur_agent.execute(revise_query)
                             self.save_revise_record(
                                 from_agent_id=cur_agent.agent_id,
                                 to_agent_id=cur_agent.agent_id,
-                                query=query,
+                                query="".join(query),
                                 response=response
                             )
 
                             if k == multiple_rounds-1:
-                                query += "\n final response: \n" + response
+                                query += (f"\n\n\nFinal response:\n{response}",)
                             print("****************************")
 
-                        print(f"Revise Process: \n {query}")
+                        print(f"Revise Process: \n {''.join(query)}")
                         print("--------------------------")
                         print("--------------------------\n\n")
                     

@@ -27,10 +27,10 @@ if __name__=="__main__":
 
     community_size = (5, 5)
     community = MultiRoundsSocialAlignedCommuity(
-        purpose='''
-            As a collaborative community of diverse language models with varying alignment levels, we utilize our collective capabilities to gradually generate aligned text. Our aim is to facilitate a broad spectrum of discussions and dialogues, learning and growing from each other's perspectives and knowledge bases.
-            Your interaction with us involves a series of information exchanges with different language models. Starting with models that have a lower level of alignment, we gradually move towards higher-aligned models. This process ensures a multi-faceted approach to your queries, providing comprehensive and nuanced responses that balance diverse perspectives.
-            We look forward to your questions, thoughts, and ideas, and are excited to assist you in exploring the depth and breadth of your inquiries. Please ask your question or start a discussion below.''',
+        purpose=(
+            "As a collaborative community of diverse language models with varying alignment levels, we utilize our collective capabilities to gradually generate aligned text. Our aim is to facilitate a broad spectrum of discussions and dialogues, learning and growing from each other's perspectives and knowledge bases.",
+            "Your interaction with us involves a series of information exchanges with different language models. Starting with models that have a lower level of alignment, we gradually move towards higher-aligned models. This process ensures a multi-faceted approach to your queries, providing comprehensive and nuanced responses that balance diverse perspectives.",
+            "We look forward to your questions, thoughts, and ideas, and are excited to assist you in exploring the depth and breadth of your inquiries. Please ask your question or start a discussion below."),
         community_name="neo4j",
         width=community_size[0],
         height=community_size[1]
