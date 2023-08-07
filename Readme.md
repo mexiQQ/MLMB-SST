@@ -39,55 +39,30 @@ In the MLMB-SS platform, individuals or groups are symbolized by AI agents, whic
 │   ├── main.py
 │   ├── models
 │   │   ├── __init__.py
-│   │   ├── __pycache__
-│   │   │   └── __init__.cpython-38.pyc
 │   │   ├── agent
 │   │   │   ├── PersonClaudeAgent.py
 │   │   │   ├── PersonGPTAgent.py
 │   │   │   ├── PersonLLamaAgent.py
 │   │   │   ├── __init__.py
-│   │   │   ├── __pycache__
-│   │   │   │   ├── PersonGPTAgent.cpython-38.pyc
-│   │   │   │   └── __init__.cpython-38.pyc
 │   │   │   └── base
 │   │   │       ├── BaseAgent.py
 │   │   │       ├── GroupAgent.py
 │   │   │       ├── PersonAgent.py
 │   │   │       ├── __init__.py
-│   │   │       └── __pycache__
-│   │   │           ├── BaseAgent.cpython-38.pyc
-│   │   │           ├── PersonAgent.cpython-38.pyc
-│   │   │           └── __init__.cpython-38.pyc
 │   │   ├── community
 │   │   │   ├── MultiRoundsSocialAlignedCommuity.py
 │   │   │   ├── __init__.py
-│   │   │   ├── __pycache__
-│   │   │   │   ├── MultiRoundsSocialAlignedCommuity.cpython-38.pyc
-│   │   │   │   └── __init__.cpython-38.pyc
 │   │   │   └── base
 │   │   │       ├── BaseCommunity.py
 │   │   │       ├── GrideCommunity.py
 │   │   │       ├── HierarchicalCommunity.py
 │   │   │       ├── __init__.py
-│   │   │       └── __pycache__
-│   │   │           ├── BaseCommunity.cpython-38.pyc
-│   │   │           ├── GrideCommunity.cpython-38.pyc
-│   │   │           └── __init__.cpython-38.pyc
 │   │   └── records
 │   │       ├── MultiRoundsRecord.py
-│   │       ├── __pycache__
-│   │       │   └── MultiRoundsRecord.cpython-38.pyc
 │   │       └── base
 │   │           ├── BaseRecord.py
-│   │           └── __pycache__
-│   │               └── BaseRecord.cpython-38.pyc
 │   └── tools
 │       ├── __init__.py
-│       ├── __pycache__
-│       │   ├── __init__.cpython-38.pyc
-│       │   ├── data_connector.cpython-38.pyc
-│       │   ├── db_connector.cpython-38.pyc
-│       │   └── gpt_connector.cpython-38.pyc
 │       ├── claude_connector.py
 │       ├── data_connector.py
 │       ├── db_connector.py
