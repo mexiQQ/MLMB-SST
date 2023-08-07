@@ -7,11 +7,16 @@ The Multi-Language-Model-Based Social Simulation, or MLMB-SS, involves social si
 
 In the MLMB-SS platform, individuals or groups are symbolized by AI agents, which are built upon LLMs. This provides an innovative means of studying and simulating social interactions and behaviors. The MLMB-SS tool blends elements of social science, artificial intelligence, and network simulation, making it a multidisciplinary platform for advanced computational social science.
 
-![image info](./assets/logo.jpg)
+<!-- ![image info](./assets/logo.jpg) -->
+
+<img src="./assets/logo.jpg" alt= “” width="" height="300px">
+
 
 ## Code Tree
 
-```
+<div style="font-size: 0.8em;">
+
+```python
 .
 ├── LICENSE
 ├── Readme.md
@@ -93,6 +98,7 @@ In the MLMB-SS platform, individuals or groups are symbolized by AI agents, whic
 
 22 directories, 56 files
 ```
+</div>
 
 ## UML Design
 
