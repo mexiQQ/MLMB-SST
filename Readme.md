@@ -17,23 +17,6 @@ In the MLMB-SS platform, individuals or groups are symbolized by AI agents, whic
 <div style="font-size: 0.8em;">
 
 ```python
-.
-├── LICENSE
-├── Readme.md
-├── assets
-│   ├── classes_Project.png
-│   ├── packages_Project.png
-│   └── sample.txt
-├── configs
-│   ├── base.yaml
-│   ├── db_config.yaml
-│   └── openai_config.yaml
-├── data
-│   └── hh-rlhf
-│       ├── labeled_prior.jsonl
-│       ├── question.txt
-│       └── test.jsonl
-├── run.sh
 ├── src
 │   ├── build_database.py
 │   ├── main.py
@@ -70,8 +53,6 @@ In the MLMB-SS platform, individuals or groups are symbolized by AI agents, whic
 │       ├── llama_connector.py
 │       └── misc_utils.py
 └── structure.txt
-
-22 directories, 56 files
 ```
 </div>
 
