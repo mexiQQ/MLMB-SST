@@ -43,7 +43,7 @@ class BaseAgent:
         agent.agent_id = data['id']
         return agent
     
-    def execute(self, input: str, description: str):
+    def execute(self, input: str, description: str=None):
         raise NotImplementedError("This method should be implemented in child class")
 
     # def add_record(self, to_agent_id: str, query: str, response: str):

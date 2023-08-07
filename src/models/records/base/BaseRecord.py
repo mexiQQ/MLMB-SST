@@ -40,7 +40,7 @@ class BaseRecord:
     def save(self):
         query = "INSERT INTO records (id, from_agent_id, to_agent_id, query, response, create_time, update_time) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         values = (self.record_id, self.from_agent_id, self.to_agent_id, self.query, self.response, self.create_time, self.update_time)
-        self.mysql_drive.execute_query(query, values)
+        mysql_drive.execute_query(query, values)
 
     @staticmethod
     def get_record_with_record_id(record_id: str):

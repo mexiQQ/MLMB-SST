@@ -79,7 +79,7 @@ class BaseCommunity:
                 RETURN DISTINCT b
                 """
             result = session.run(query, agent_id=agent_id)
-            return [BaseAgent.from_dict(record['b']) for record in result]
+            return [record['b'] for record in result]
         
     def count_nodes(self):
         with neo4j_driver.session(database=self.community_name) as session:
