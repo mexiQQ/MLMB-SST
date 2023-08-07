@@ -9,7 +9,7 @@ In the MLMB-SS platform, individuals or groups are symbolized by AI agents, whic
 
 <!-- ![image info](./assets/logo.jpg) -->
 
-<img src="./assets/logo.jpg" alt= “” width="" height="300px">
+<img src="./assets/logo.jpg" alt= “” width="auto" height="400px">
 
 
 ## Code Tree
