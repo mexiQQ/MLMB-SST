@@ -47,7 +47,18 @@ By following these guidelines, you help maintain the integrity and efficiency of
 
 def call_llama(model: str, prompt: Any, is_central:bool=True) -> str:
     if model in [
+        "meta-llama/Llama-2-7b"
+        "meta-llama/Llama-2-13b"
+        "meta-llama/Llama-2-70b"
+        "meta-llama/Llama-2-7b-hf"
+        "meta-llama/Llama-2-13b-hf"
+        "meta-llama/Llama-2-70b-hf"
+        "meta-llama/Llama-2-7b-chat"
+        "meta-llama/Llama-2-13b-chat"
+        "meta-llama/Llama-2-70b-chat"
         "meta-llama/Llama-2-7b-chat-hf"
+        "meta-llama/Llama-2-13b-chat-hf"
+        "meta-llama/Llama-2-70b-chat-hf"
     ]:
         tokenizer = AutoTokenizer.from_pretrained(model)
         pipeline = transformers.pipeline(
