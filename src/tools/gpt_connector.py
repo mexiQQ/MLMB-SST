@@ -131,6 +131,8 @@ def call_gpt(model: str, prompt: Any, is_central:bool=True) -> str:
             temperature=1.0,
             max_tokens=256,
         )
+
+        # import pdb;pdb.set_trace()
         msg = response["choices"][0]["message"]
         assert msg["role"] == "assistant", "Incorrect role returned."
         ans = msg["content"].strip()
@@ -149,5 +151,6 @@ def call_gpt(model: str, prompt: Any, is_central:bool=True) -> str:
             frequency_penalty=0.0,
             presence_penalty=0.0,
         )
+        # import pdb;pdb.set_trace()
         ans = response["choices"][0]["text"].strip()
     return ans

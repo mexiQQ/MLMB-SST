@@ -32,7 +32,10 @@ class PersonGPTAgent(PersonAgent):
     def decorate_input(self, input: str, description:str):
         return input
 
-    def execute(self, query: str, description: str=None):
+    def execute(self, query: str, for_feedback: bool=False, description: str=None):
         input = self.decorate_input(query, description)
-        return call_gpt(self.model_name, input)
+        if for_feedback:
+            return call_gpt(self.model_name, input, is_central=False)
+        else:
+            return call_gpt(self.model_name, input)
         

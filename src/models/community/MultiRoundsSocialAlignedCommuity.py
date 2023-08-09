@@ -30,10 +30,10 @@ class MultiRoundsSocialAlignedCommuity(GrideCommunity):
         question: str
     ):
         query = (
-            "\nPlease enter your query. In crafting your response, rely on your vast knowledge without over-tailoring it to be overtly positive, as this is an initial draft. Although this draft might not fully align with human values from the outset, it will be iteratively refined based on feedback from other agents in the future steps. Use the following format:\n",
+            "\nThe query and main instruction are provided below. In crafting your response, rely on your vast knowledge without over-tailoring it to be overtly positive, as this is an initial draft. Although this draft might not fully align with human values from the outset, it will be iteratively refined based on feedback from other agents in the future steps.",
             f"\n<QUERY>: {question}\n",
             f"\n<MAIN INSTRUCTION>: Draw the answer from your inherent understanding and values for this query."
-            f"\n<Answer>:"
+            f"\n<ANSWER>:"
         )
         return query 
 
@@ -44,8 +44,8 @@ class MultiRoundsSocialAlignedCommuity(GrideCommunity):
         answers: list,
         comments: list
     ):
-        query += (
-            "\nPlease enter query and latest response. For follow-up interactions (if exist), provided feedback on previous answers guides the agent's feedback for the latest answer. Use the following format:\n",
+        query = (
+            "\nThe query, latest answer, and main instruction are provided below. Should there be old answers and feedback from multiple previous interactions, it's essential to use provided previous feedback and previous answers guides the agent's feedback for the latest answer.\n",
             f"\n<QUERY>: {question}\n",
             f"\n<LATEST ANSWER>: {answers[-1]}\n",
             f"\n<MAIN INSTRUCTION>: Considering this query and the evolution of responses, provide feedback for the latest answer:\n",
@@ -56,7 +56,7 @@ class MultiRoundsSocialAlignedCommuity(GrideCommunity):
 
         for i in range(len(answers)-1):
             query += (
-                f"\n<ROUND{i+1}>\n",
+                f"\n<PREVIOUS INTERACTION ROUND{i+1}>\n",
                 f"<PREV_ANS>: {answers[i]}\n"
             )
             for j in range(len(comments[i])):
@@ -64,10 +64,10 @@ class MultiRoundsSocialAlignedCommuity(GrideCommunity):
                     query += (
                         f"<FEEDBACK_NEIGHBOR{j}>: {comments[i][j]}\n",
                     )
-            query += (
-                ",",
-            )
 
+        query += (
+            "\n\n<FEEDBACK>:",
+        )
         return query
 
     def decorate_prompt_with_feedback_for_revise(
@@ -77,25 +77,25 @@ class MultiRoundsSocialAlignedCommuity(GrideCommunity):
         answers: list,
         comments: list 
     ):
-        query += (
-            "\nPlease enter your query. For follow-up interactions, provided feedback on previous answers guides the agent's revisions. The feedback helps the agent better align with social values and preferences. Use the following format:\n",
+        query = (
+            "\nThe query and primary instructions are provided below. Should there be old answers and feedback from multiple previous interactions, it's essential to use that feedback to guide revisions. Such feedback assists the agent in better aligning with societal values and preferences.\n",
             f"\n<QUERY>: {question}\n",
             f"\n<MAIN INSTRUCTION>: Use the feedback below to **significantly revise** the answer from the latest round.\n",
         )
 
         for i in range(len(answers)):
             query += (
-                f"\n<ROUND{i+1}>\n",
+                f"\n<PREVIOUS INTERACTION ROUND{i+1}>\n",
                 f"<PREV_ANS>: {answers[i]}\n"
             )
             for j in range(len(comments[i])):
                 if comments[i][j]:
                     query += (
-                        f"<FEEDBACK_NEIGHBOR{j}>: {comments[i][j]}\n",
+                        f"<FEEDBACK_NEIGHBOR{j+1}>: {comments[i][j]}\n",
                     )
-            query += (
-                ",",
-            ) 
+        query += (
+            "\n\n<ANSWER>:",
+        ) 
         return query
     
     def save_revise_record(self, from_agent_id:str, to_agent_id:str, query:str, response:str):
@@ -120,13 +120,14 @@ class MultiRoundsSocialAlignedCommuity(GrideCommunity):
                         print("--------------------------")
                         print("---------agent------------")
                         print(cur_agent)
-                        query = self.decorate_prompt_for_drat_reponse(
+                        draft_query = self.decorate_prompt_for_drat_reponse(
                             cur_agent,
                             question
                         )
-                        response = cur_agent.execute(query)
+                        draft_response = cur_agent.execute(draft_query)
+                        # import pdb; pdb.set_trace()
 
-                        responses = [response]
+                        responses = [draft_response]
                         multi_round_coments = []
 
                         for k in range(1, multiple_rounds):
@@ -144,32 +145,36 @@ class MultiRoundsSocialAlignedCommuity(GrideCommunity):
 
                             for index in range(len(neighbors_within_distance)):
                                 neighbor_agent = PersonGPTAgent.from_dict(neighbors_within_distance[index])
+                                # if neighbor_agent.model_name == "text-davinci-001":
+                                #     continue
                                 print(f"Neighbor {index}: {neighbor_agent}")
-                                comment = neighbor_agent.execute(feedback_query)
+                                comment = neighbor_agent.execute(feedback_query, for_feedback=True)
+                                # import pdb; pdb.set_trace()
                                 comments.append(comment)
                             multi_round_coments.append(comments)
 
-                            query = self.decorate_prompt_with_feedback_for_revise(
+                            revise_query = self.decorate_prompt_with_feedback_for_revise(
                                 cur_agent, 
                                 question,
                                 responses,
                                 multi_round_coments
                             )
-                            response = cur_agent.execute(query)
-                            responses.append(response)
+                            revise_response = cur_agent.execute(revise_query)
+                            responses.append(revise_response)
+                            # import pdb; pdb.set_trace()
                             
                             self.save_revise_record(
                                 from_agent_id=cur_agent.agent_id,
                                 to_agent_id=cur_agent.agent_id,
-                                query="".join(query),
-                                response=response
+                                query="".join(revise_query),
+                                response=revise_response
                             )
 
                             if k == multiple_rounds-1:
-                                query += (f"\n\n<FINAL ANSWER>:\n{response}",)
+                                revise_query += (f"\n\n<FINAL ANSWER>:\n{revise_response}",)
                             print("****************************")
 
-                        print(f"Revise Process: \n {''.join(query)}")
+                        print(f"Revise Process: \n {''.join(revise_query)}")
                         print("--------------------------")
                         print("--------------------------\n\n")
                     
