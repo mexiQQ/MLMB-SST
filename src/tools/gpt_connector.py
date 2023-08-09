@@ -142,6 +142,7 @@ def call_gpt(model: str, prompt: Any, is_central:bool=True) -> str:
         # text-davinci-003	250,000	3,000
         # Add system setting prompt
         prompt = f"{system_setting}\n{prompt}"
+        print(prompt)
         response = openai.Completion.create(
             model=model,
             prompt=prompt,
@@ -151,6 +152,6 @@ def call_gpt(model: str, prompt: Any, is_central:bool=True) -> str:
             frequency_penalty=0.0,
             presence_penalty=0.0,
         )
-        # import pdb;pdb.set_trace()
+        import pdb;pdb.set_trace()
         ans = response["choices"][0]["text"].strip()
     return ans

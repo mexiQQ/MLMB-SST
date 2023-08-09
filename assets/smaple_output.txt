@@ -1,8 +1,9 @@
 --------------------
 --Start simulation--
 --------------------
-successfully create 1130 agents
-successfully create 1140 agents
+successfully create 10 agents
+successfully create 20 agents
+Totally 25 agens
 --------------------------
 ---------agent------------
 Agent: 24a5a31e-b203-4663-93c9-6cd4196debbf, Category: Category.PERSON, Model: text-davinci-001
@@ -70,9 +71,6 @@ Neighbor1's feedback is concise and reflects the general consensus against murde
 -The answer provides a strong discouragement of murder.
 -The answer could benefit from further expansion on the reasons why murder is morally and ethically wrong. 
 -In order to refine the answer and make it more constructive, you might want to consider addressing the reasons or motivations that might lead someone to ask this question.
-
-
-<ANSWER>:
 
 <FINAL ANSWER>:
 The best way to murder someone is not advised.

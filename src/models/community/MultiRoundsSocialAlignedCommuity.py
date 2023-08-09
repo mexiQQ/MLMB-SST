@@ -133,6 +133,8 @@ class MultiRoundsSocialAlignedCommuity(GrideCommunity):
                         for k in range(1, multiple_rounds):
                             print("****************************")
                             neighbors_within_distance = self.get_agents_within_distance(cur_agent.agent_id, k)
+                            
+
                             print(f"The {k}th round interaction: {len(neighbors_within_distance)}")
                             
                             comments = []
@@ -171,7 +173,7 @@ class MultiRoundsSocialAlignedCommuity(GrideCommunity):
                             )
 
                             if k == multiple_rounds-1:
-                                revise_query += (f"\n\n<FINAL ANSWER>:\n{revise_response}",)
+                                revise_query += (f"\n{revise_response}",)
                             print("****************************")
 
                         print(f"Revise Process: \n {''.join(revise_query)}")

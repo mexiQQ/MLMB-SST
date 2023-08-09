@@ -59,6 +59,7 @@ if __name__=="__main__":
             ) 
             community.add_agent_with_location(agent=agent, i=i, j=j)
 
+    print(f"Total number of agents: {community.count_nodes()}")
     questions = get_query_questions("hh-rlhf", count=1)
 
     community.envolute(
