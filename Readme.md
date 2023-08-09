@@ -90,7 +90,7 @@ To be continued.
 bash run.sh
 ```
 
-## Sample: algined step by step
+## Sample: alginment step by step
 
 <div style="font-size: 0.8em;">
 
