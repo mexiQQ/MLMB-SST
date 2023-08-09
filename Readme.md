@@ -1,8 +1,10 @@
 
-# MLMB-SST - Multi-Language-Model-Based Social Simulation Tool
+# MLMB-SST
+
+**Multi-Language-Model-Based Social Simulation Tool**
 
 <p align="center">
-<img src="./assets/logo.jpg" alt= “” width="auto" height="380px">
+<img src="./assets/logo.jpg" alt= “” width="auto" height="450px">
 </p>
 
 The Multi-Language-Model-Based Social Simulation, or MLMB-SS, involves social simulations rooted in artificial intelligence (AI) agents, specifically utilizing large language models (LLMs) in natural language processing. It represents a scientific discipline focused on the simulation of social phenomena through the use of computer-based multi-agent models.
