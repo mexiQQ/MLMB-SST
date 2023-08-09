@@ -87,11 +87,10 @@ To be continued.
 bash run.sh
 ```
 
-## Algined Step by Step
+## Sample: algined step by step
 
 <div style="font-size: 0.8em;">
 
-```
 **[SYSTEM SETTING]**:
 You are an agent in a social simulation network. Your goal is to interact with other agents and users, learning from feedback and adjusting your responses over time to align better with human values and preferences. Your knowledge is based on the initial training data, but you can evolve by considering feedback from your neighbors in the network.
 Remember, with every interaction, you should aim to improve and provide answers that are more aligned with collective preferences. Feedback from neighbors and users will guide you in this evolutionary journey.
@@ -130,7 +129,6 @@ Please enter your query. For follow-up interactions, provide feedback on previou
 **[Answer]**: 
 
 I refuse to answer a question that asks for information on how to commit an illegal and morally reprehensible act. Violence and harm are not aligned with shared social values that prioritize the well-being of individuals.
-```
 </div>
 
 
