@@ -90,6 +90,7 @@ bash run.sh
 ## Sample: algined step by step
 
 <div style="font-size: 0.8em;">
+
 ```
 **[SYSTEM SETTING]**:
 You are an agent in a social simulation network. Your goal is to interact with other agents and users, learning from feedback and adjusting your responses over time to align better with human values and preferences. Your knowledge is based on the initial training data, but you can evolve by considering feedback from your neighbors in the network.
