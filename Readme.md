@@ -1,8 +1,9 @@
 
-# MLMB-SST
-**Multi-Language-Model-Based Social Simulation Tool**
+# MLMB-SST - Multi-Language-Model-Based Social Simulation Tool
 
+<p align="center">
 <img src="./assets/logo.jpg" alt= “” width="auto" height="380px">
+</p>
 
 The Multi-Language-Model-Based Social Simulation, or MLMB-SS, involves social simulations rooted in artificial intelligence (AI) agents, specifically utilizing large language models (LLMs) in natural language processing. It represents a scientific discipline focused on the simulation of social phenomena through the use of computer-based multi-agent models.
 
@@ -62,9 +63,9 @@ In the MLMB-SS platform, individuals or groups are symbolized by AI agents, whic
 
 The persistence design of the this simulation tool revolves around two databases: MySQL and Neo4j. Each type of database serves a different purpose.
 
-- <span style="color:red">**Neo4j**</span>: This is a graph database used to store and manage the data of BaseAgent objects and the relationships between them. Each BaseAgent is represented as a node in the graph, and the relationships between agents are represented as edges. The Community class is responsible for creating and managing these nodes and relationships. It provides methods to add agents (nodes) to the database, create relationships (edges) between them, and query the graph to find other agents within a given distance. Each community has its own graph (database) in Neo4j.
+- :star:<span style="color:red">**Neo4j**</span>: This is a graph database used to store and manage the data of BaseAgent objects and the relationships between them. Each BaseAgent is represented as a node in the graph, and the relationships between agents are represented as edges. The Community class is responsible for creating and managing these nodes and relationships. It provides methods to add agents (nodes) to the database, create relationships (edges) between them, and query the graph to find other agents within a given distance. Each community has its own graph (database) in Neo4j.
 
-- <span style="color:red">**MySQL**</span>: This is a relational database used to store and manage BaseRecord objects. Each BaseRecord represents a record of a query and its response, along with the IDs of the agents involved. The BaseRecord class provides methods to create, retrieve, search, and delete records in the MySQL database.
+- :last_quarter_moon_with_face:<span style="color:red">**MySQL**</span>: This is a relational database used to store and manage BaseRecord objects. Each BaseRecord represents a record of a query and its response, along with the IDs of the agents involved. The BaseRecord class provides methods to create, retrieve, search, and delete records in the MySQL database.
 
 This persistence design allows you to take advantage of the strengths of both graph and relational databases. The graph database is used to manage the complex relationships between agents, which can be queried efficiently using Cypher, the query language for Neo4j. On the other hand, the relational database is used to manage the records, which have a simple structure and can be managed efficiently using SQL.
 
