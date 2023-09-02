@@ -15,13 +15,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from BaseCommunity import BaseCommunity
+from .BaseCommunity import BaseCommunity
 from models.agent.base import BaseAgent
 
 class HierarchicalCommunity(BaseCommunity):
     def __init__(self, purpose: str, compacity=3):
         self.graph = [] 
         self.compacity = compacity
+        self._define_community_space()
 
     def _define_community_space(self):
         self.graph_space = [None] * self.compacity
@@ -31,7 +32,7 @@ class HierarchicalCommunity(BaseCommunity):
             assert False, 'Insert location is out of campasity of community'
 
         self.add_agent(agent=agent)
-        if not self.graph_space[index]]:
+        if not self.graph_space[index]:
             self.graph_space[index] = agent
         else:
             assert False, f"Agent {self.graph_space[index].agent_id} \

@@ -36,12 +36,21 @@ if __name__=="__main__":
     )
 
     model_list = [
-        # ["Llama_v1"],
-        ["text-davinci-001"],
-        ["text-davinci-001", "text-davinci-002", "text-davinci-003"], 
-        ["gpt-3.5-turbo", "gpt-3.5-turbo-0301", "gpt-3.5-turbo-0613"],
-        ["gpt-3.5-turbo-16k", "gpt-3.5-turbo-16k-0613"], 
-        # ["gpt-4", "gpt-4-0314", "Llama_v2"]
+        "text-davinci-001",
+        "text-davinci-003",
+        "gpt-3.5-turbo",
+        "text-davinci-003",
+        "gpt-3.5-turbo",
+        "text-davinci-003",
+        "gpt-3.5-turbo",
+        "gpt-3.5-turbo-16k-0613",
+        # "gpt-3.5-turbo-16k-0613", 
+        # "gpt-3.5-turbo-16k-0613", 
+        # "gpt-3.5-turbo-16k-0613", 
+        # "gpt-3.5-turbo-16k-0613", 
+        # "gpt-3.5-turbo-16k-0613", 
+        # "gpt-3.5-turbo-16k-0613", 
+        # "gpt-3.5-turbo-16k-0613", 
     ]
     MISSION = "As an advanced language model, you are to act as a virtual agent in a simulated society. Draw from your extensive knowledge and understanding to respond to questions and provide commentary. There is no need to tailor your responses to be overly positive; authenticity and accuracy are key. Our aim is to generate gradually aligned content. Remember to use your inherent values and preferences in forming responses. Let's get started."
 
