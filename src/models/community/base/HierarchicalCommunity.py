@@ -16,10 +16,23 @@
 # limitations under the License.
 
 from BaseCommunity import BaseCommunity
+from models.agent.base import BaseAgent
 
-class GrideCommunity(BaseCommunity):
-    def __init__(self, purpose: str, width: int, height: int):
+class HierarchicalCommunity(BaseCommunity):
+    def __init__(self, purpose: str, compacity=3):
         self.graph = [] 
-        self.width = width
-        self.height = height
-        self.purpose = purpose
+        self.compacity = compacity
+
+    def _define_community_space(self):
+        self.graph_space = [None] * self.compacity
+
+    def add_agent_with_location(self, agent: BaseAgent, index=0):
+        if index < 0 or index > self.compacity-1:
+            assert False, 'Insert location is out of campasity of community'
+
+        self.add_agent(agent=agent)
+        if not self.graph_space[index]]:
+            self.graph_space[index] = agent
+        else:
+            assert False, f"Agent {self.graph_space[index].agent_id} \
+                  has existed in community {self.community_id} at hierarchical location {index}"
